@@ -109,7 +109,62 @@
     });
   });
 
-  if (state.trip) fields.forEach((id) => { if (state.trip[id] !== undefined) $(id).value = state.trip[id]; });
+
+  $("exportData").addEventListener("click", () => {
+    const payload = { version: 1, exportedAt: new Date().toISOString(), trip: state.trip || {}, passengers: state.passengers, checks: state.checks };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "tatkal-sathi-backup.json";
+    link.click();
+    URL.revokeObjectURL(url);
+    $("backupMessage").textContent = "Backup फाइल डाउनलोड के लिए तैयार है। इसे सुरक्षित रखें।";
+  });
+  $("importData").addEventListener("change", async (event) => {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+    try {
+      if (file.size > 100000) throw new Error("Backup फाइल बहुत बड़ी है।");
+      const imported = JSON.parse(await file.text());
+      if (!imported || typeof imported !== "object" || !Array.isArray(imported.passengers) || imported.passengers.length > 6 || !imported.checks || typeof imported.checks !== "object") throw new Error("यह Tatkal Sathi backup फाइल नहीं है।");
+      const allowedChecks = Object.keys(defaultChecks);
+      const cleanChecks = Object.fromEntries(allowedChecks.map((key) => [key, Boolean(imported.checks[key])]));
+      const cleanPassengers = imported.passengers.map((p) => {
+        if (!p || typeof p !== "object") throw new Error("Passenger data सही नहीं है।");
+        return { name: String(p.name || "").slice(0, 80), age: String(p.age ?? "").slice(0, 3) };
+      });
+      const trip = imported.trip && typeof imported.trip === "object" ? Object.fromEntries(fields.map((key) => [key, String(imported.trip[key] || "").slice(0, 100)])) : {};
+      state.trip = trip; state.passengers = cleanPassengers; state.checks = cleanChecks;
+      save();
+      fields.forEach((id) => { $(id).value = state.trip[id] || ""; });
+      document.querySelectorAll("[data-check]").forEach((input) => { input.checked = Boolean(state.checks[input.dataset.check]); });
+      renderPassengers(); updateSummary();
+      $("backupMessage").textContent = "Backup सफलतापूर्वक restore हो गया।";
+    } catch (error) {
+      $("backupMessage").textContent = error.message || "Backup restore नहीं हो सका।";
+    } finally { event.target.value = ""; }
+  });
+
+  let installPrompt = null;
+  const installButton = $("installApp");
+  window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    installPrompt = event;
+    installButton.hidden = false;
+  });
+  installButton.addEventListener("click", async () => {
+    if (!installPrompt) return;
+    installPrompt.prompt();
+    await installPrompt.userChoice;
+    installPrompt = null;
+    installButton.hidden = true;
+  });
+  window.addEventListener("appinstalled", () => {
+    installButton.hidden = true;
+    $("connectionStatus").textContent = "● App installed";
+  });
+\n  if (state.trip) fields.forEach((id) => { if (state.trip[id] !== undefined) $(id).value = state.trip[id]; });
   renderPassengers();
   updateSummary();
   $("connectionStatus").textContent = navigator.onLine ? "● Online" : "● Offline";

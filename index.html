@@ -13,7 +13,7 @@
 <body>
   <header class="topbar">
     <a class="brand" href="./" aria-label="Tatkal Assistant home"><span class="brand-mark">T</span><span>Tatkal<span class="brand-light"> साथी</span></span></a>
-    <span class="offline-pill" id="connectionStatus">Checking connection…</span>
+    <div class="top-actions"><span class="offline-pill" id="connectionStatus">Checking connection…</span><button class="install-btn" id="installApp" type="button" hidden>Install app</button></div>
   </header>
   <main class="shell">
     <section class="hero">
@@ -33,7 +33,7 @@
       <div class="stat-card"><span class="stat-label">तैयारी</span><strong id="checkSummary">0/5 पूरी</strong></div>
     </section>
 
-    <section class="panel" id="tripForm">
+    <section class="panel quick-links"><div class="section-heading"><div><span class="step">LIVE RAILWAY LINKS</span><h2>रेलवे जानकारी</h2></div><span class="section-icon">🔎</span></div><div class="link-grid"><a href="https://www.irctc.co.in/nget/train-search" target="_blank" rel="noopener noreferrer"><b>Train Search</b><small>IRCTC पर ट्रेन खोजें ↗</small></a><a href="https://enquiry.indianrail.gov.in/mntes/" target="_blank" rel="noopener noreferrer"><b>NTES Live Status</b><small>Official train running status ↗</small></a><a href="https://www.indianrail.gov.in/" target="_blank" rel="noopener noreferrer"><b>Indian Railways</b><small>Official railway information ↗</small></a></div></section>\n\n    <section class="panel" id="tripForm">
       <div class="section-heading"><div><span class="step">01 / TRIP</span><h2>यात्रा की जानकारी</h2></div><span class="section-icon">🚆</span></div>
       <form id="tripDetailsForm">
         <div class="form-grid">
@@ -70,7 +70,7 @@
       <p class="progress-caption" id="progressCaption">0% तैयारी पूरी</p>
     </section>
 
-    <section class="bottom-cta">
+    <section class="panel backup-panel"><div class="section-heading"><div><span class="step">04 / YOUR DATA</span><h2>Backup और Restore</h2></div><span class="section-icon">🛡️</span></div><p class="muted">अपनी यात्रा, passenger list और checklist का backup JSON फाइल में रखें। Backup फाइल निजी रखें।</p><div class="form-actions"><button class="secondary-btn" id="exportData" type="button">↓ Backup डाउनलोड</button><label class="import-label" for="importData">↑ Backup Restore</label><input id="importData" type="file" accept="application/json,.json" hidden></div><p class="form-message" id="backupMessage" role="status" aria-live="polite"></p></section>\n\n    <section class="bottom-cta">
       <div><span class="step">READY WHEN YOU ARE</span><h2>तैयारी पूरी? अब official booking करें।</h2><p>बुकिंग और भुगतान IRCTC पर स्वयं पूरा करें।</p></div>
       <a class="primary-btn" href="https://www.irctc.co.in/nget/train-search" target="_blank" rel="noopener noreferrer">IRCTC खोलें ↗</a>
     </section>

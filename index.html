@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10243a">
+  <meta name="description" content="A privacy-first Tatkal trip preparation assistant. Plan passenger details and booking checklist offline.">
+  <title>Tatkal Booking Assistant</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Tatkal Assistant home"><span class="brand-mark">T</span><span>Tatkal<span class="brand-light"> साथी</span></span></a>
+    <span class="offline-pill" id="connectionStatus">Checking connection…</span>
+  </header>
+  <main class="shell">
+    <section class="hero">
+      <div class="eyebrow">PLAN SMART • BOOK OFFICIALLY</div>
+      <h1>Tatkal की तैयारी,<br><span>अब आसान।</span></h1>
+      <p>अपनी यात्रा की जानकारी और passenger details पहले से तैयार रखें। आपका डेटा इसी डिवाइस पर रहता है।</p>
+      <div class="hero-actions">
+        <a class="primary-btn" href="#tripForm">यात्रा तैयार करें <span aria-hidden="true">→</span></a>
+        <a class="text-btn" href="https://www.irctc.co.in/nget/train-search" target="_blank" rel="noopener noreferrer">Official IRCTC ↗</a>
+      </div>
+      <div class="hero-note"><span class="pulse"></span> Offline में भी आपकी saved तैयारी उपलब्ध</div>
+    </section>
+
+    <section class="stats" aria-label="Quick status">
+      <div class="stat-card"><span class="stat-label">यात्रा की तारीख</span><strong id="tripDateSummary">अभी तय नहीं</strong></div>
+      <div class="stat-card"><span class="stat-label">यात्री</span><strong id="passengerSummary">0 यात्री</strong></div>
+      <div class="stat-card"><span class="stat-label">तैयारी</span><strong id="checkSummary">0/5 पूरी</strong></div>
+    </section>
+
+    <section class="panel" id="tripForm">
+      <div class="section-heading"><div><span class="step">01 / TRIP</span><h2>यात्रा की जानकारी</h2></div><span class="section-icon">🚆</span></div>
+      <form id="tripDetailsForm">
+        <div class="form-grid">
+          <label>From स्टेशन<input id="fromStation" name="fromStation" placeholder="जैसे CSMT" maxlength="80"></label>
+          <label>To स्टेशन<input id="toStation" name="toStation" placeholder="जैसे BSL" maxlength="80"></label>
+          <label>Train number / नाम<input id="train" name="train" placeholder="जैसे 12110" maxlength="100"></label>
+          <label>यात्रा की तारीख<input id="journeyDate" name="journeyDate" type="date"></label>
+          <label>Quota<select id="quota" name="quota"><option value="Tatkal">Tatkal</option><option value="Premium Tatkal">Premium Tatkal</option></select></label>
+          <label>Class<select id="travelClass" name="travelClass"><option value="SL">Sleeper (SL)</option><option value="3A">AC 3 Tier (3A)</option><option value="2A">AC 2 Tier (2A)</option><option value="1A">First AC (1A)</option><option value="CC">Chair Car (CC)</option><option value="2S">Second Sitting (2S)</option><option value="3E">AC 3 Economy (3E)</option></select></label>
+        </div>
+        <div class="form-actions"><button class="primary-btn" type="submit">यात्रा सेव करें</button><button class="quiet-btn" type="button" id="clearTrip">फॉर्म साफ करें</button></div>
+        <p class="form-message" id="tripMessage" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading"><div><span class="step">02 / PASSENGERS</span><h2>यात्री की जानकारी</h2></div><span class="section-icon">👤</span></div>
+      <p class="muted">केवल तैयारी के लिए नाम और उम्र सेव करें। Aadhaar, कार्ड नंबर या कोई संवेदनशील जानकारी न डालें।</p>
+      <div id="passengerList" class="passenger-list"></div>
+      <button class="secondary-btn" type="button" id="addPassenger">＋ यात्री जोड़ें</button>
+      <p class="form-message" id="passengerMessage" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading"><div><span class="step">03 / CHECKLIST</span><h2>Booking से पहले</h2></div><span class="section-icon">✓</span></div>
+      <div class="checklist" id="checklist">
+        <label class="check-row"><input type="checkbox" data-check="account"><span><b>IRCTC account तैयार</b><small>Official website / app पर login खुद करें</small></span></label>
+        <label class="check-row"><input type="checkbox" data-check="route"><span><b>Train और route verify</b><small>सही तारीख, स्टेशन और ट्रेन जाँचें</small></span></label>
+        <label class="check-row"><input type="checkbox" data-check="passengers"><span><b>Passenger details तैयार</b><small>नाम और उम्र सही होने की पुष्टि करें</small></span></label>
+        <label class="check-row"><input type="checkbox" data-check="payment"><span><b>Payment method तैयार</b><small>अपना सुरक्षित payment विकल्प चुनें</small></span></label>
+        <label class="check-row"><input type="checkbox" data-check="official"><span><b>Official booking channel</b><small>केवल IRCTC के आधिकारिक माध्यम का उपयोग करें</small></span></label>
+      </div>
+      <div class="progress-track"><span id="progressBar"></span></div>
+      <p class="progress-caption" id="progressCaption">0% तैयारी पूरी</p>
+    </section>
+
+    <section class="bottom-cta">
+      <div><span class="step">READY WHEN YOU ARE</span><h2>तैयारी पूरी? अब official booking करें।</h2><p>बुकिंग और भुगतान IRCTC पर स्वयं पूरा करें।</p></div>
+      <a class="primary-btn" href="https://www.irctc.co.in/nget/train-search" target="_blank" rel="noopener noreferrer">IRCTC खोलें ↗</a>
+    </section>
+    <p class="disclaimer">यह एक स्वतंत्र trip-preparation tool है, IRCTC का आधिकारिक उत्पाद नहीं। यह टिकट बुक नहीं करता, availability की गारंटी नहीं देता और CAPTCHA, OTP या IRCTC सुरक्षा नियंत्रणों को bypass नहीं करता।</p>
+  </main>
+  <footer>Made for easier preparation <span>•</span> Your data stays on this device</footer>
+  <script src="./app.js" defer></script>
+</body>
+</html>

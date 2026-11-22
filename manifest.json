@@ -1,6 +1,7 @@
 {
   "name": "Tatkal Booking Assistant",
-  "short_name": "Tatkal Sathi",\n  "id": "./",
+  "short_name": "Tatkal Sathi",
+  "id": "./",
   "description": "Privacy-first Tatkal trip preparation assistant",
   "lang": "hi-IN",
   "start_url": "./",

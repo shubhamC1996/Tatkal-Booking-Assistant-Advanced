@@ -1,0 +1,9 @@
+{
+  "name": "tatkal-booking-assistant-advanced",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Offline-first PWA for preparing Tatkal journey details",
+  "scripts": {
+    "check": "node --check app.js"
+  }
+}

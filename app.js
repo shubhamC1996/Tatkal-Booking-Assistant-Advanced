@@ -164,7 +164,8 @@
     installButton.hidden = true;
     $("connectionStatus").textContent = "● App installed";
   });
-\n  if (state.trip) fields.forEach((id) => { if (state.trip[id] !== undefined) $(id).value = state.trip[id]; });
+
+  if (state.trip) fields.forEach((id) => { if (state.trip[id] !== undefined) $(id).value = state.trip[id]; });
   renderPassengers();
   updateSummary();
   $("connectionStatus").textContent = navigator.onLine ? "● Online" : "● Offline";

@@ -87,7 +87,10 @@
   });
   $("clearTrip").addEventListener("click", () => {
     fields.forEach((id) => { $(id).value = ""; });
-    $("tripMessage").textContent = "फॉर्म साफ किया गया। सेव की गई यात्रा हटाने के लिए नया फॉर्म सेव करें।";
+    state.trip = {};
+    save();
+    $("tripMessage").textContent = "यात्रा की जानकारी इस डिवाइस से हटा दी गई।";
+    updateSummary();
   });
   $("addPassenger").addEventListener("click", () => {
     if (state.passengers.length >= 6) {

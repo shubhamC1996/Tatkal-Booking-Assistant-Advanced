@@ -26,21 +26,18 @@
       </div>
       <div class="hero-note"><span class="pulse"></span> Offline में भी आपकी saved तैयारी उपलब्ध</div>
     </section>
-
     <section class="stats" aria-label="Quick status">
       <div class="stat-card"><span class="stat-label">यात्रा की तारीख</span><strong id="tripDateSummary">अभी तय नहीं</strong></div>
       <div class="stat-card"><span class="stat-label">यात्री</span><strong id="passengerSummary">0 यात्री</strong></div>
       <div class="stat-card"><span class="stat-label">तैयारी</span><strong id="checkSummary">0/5 पूरी</strong></div>
     </section>
-
     <section class="panel quick-links"><div class="section-heading"><div><span class="step">LIVE RAILWAY LINKS</span><h2>रेलवे जानकारी</h2></div><span class="section-icon">🔎</span></div><div class="link-grid"><a href="https://www.irctc.co.in/nget/train-search" target="_blank" rel="noopener noreferrer"><b>Train Search</b><small>IRCTC पर ट्रेन खोजें ↗</small></a><a href="https://enquiry.indianrail.gov.in/mntes/" target="_blank" rel="noopener noreferrer"><b>NTES Live Status</b><small>Official train running status ↗</small></a><a href="https://www.indianrail.gov.in/" target="_blank" rel="noopener noreferrer"><b>Indian Railways</b><small>Official railway information ↗</small></a></div></section>
-
     <section class="panel" id="tripForm">
       <div class="section-heading"><div><span class="step">01 / TRIP</span><h2>यात्रा की जानकारी</h2></div><span class="section-icon">🚆</span></div>
       <form id="tripDetailsForm">
         <div class="form-grid">
-          <label>From स्टेशन<input id="fromStation" name="fromStation" placeholder="जैसे CSMT" maxlength="80"></label>
-          <label>To स्टेशन<input id="toStation" name="toStation" placeholder="जैसे BSL" maxlength="80"></label>
+          <label>From स्टेशन<input id="fromStation" name="fromStation" placeholder="स्टेशन का नाम या कोड लिखें" maxlength="100" list="fromStationOptions"><datalist id="fromStationOptions"></datalist></label>
+          <label>To स्टेशन<input id="toStation" name="toStation" placeholder="स्टेशन का नाम या कोड लिखें" maxlength="100" list="toStationOptions"><datalist id="toStationOptions"></datalist></label>
           <label>Train number / नाम<input id="train" name="train" placeholder="जैसे 12110" maxlength="100"></label>
           <label>यात्रा की तारीख<input id="journeyDate" name="journeyDate" type="date"></label>
           <label>Quota<select id="quota" name="quota"><option value="Tatkal">Tatkal</option><option value="Premium Tatkal">Premium Tatkal</option></select></label>
@@ -48,9 +45,9 @@
         </div>
         <div class="form-actions"><button class="primary-btn" type="submit">यात्रा सेव करें</button><button class="quiet-btn" type="button" id="clearTrip">फॉर्म साफ करें</button></div>
         <p class="form-message" id="tripMessage" role="status" aria-live="polite"></p>
+        <p class="muted">स्टेशन के नाम या कोड के 2 अक्षर लिखें। सुझाव इंटरनेट कनेक्शन पर आएँगे; पहले खोजे गए सुझाव इस डिवाइस में सेव रहते हैं।</p>
       </form>
     </section>
-
     <section class="panel">
       <div class="section-heading"><div><span class="step">02 / PASSENGERS</span><h2>यात्री की जानकारी</h2></div><span class="section-icon">👤</span></div>
       <p class="muted">केवल तैयारी के लिए नाम और उम्र सेव करें। Aadhaar, कार्ड नंबर या कोई संवेदनशील जानकारी न डालें।</p>
@@ -58,7 +55,6 @@
       <button class="secondary-btn" type="button" id="addPassenger">＋ यात्री जोड़ें</button>
       <p class="form-message" id="passengerMessage" role="status" aria-live="polite"></p>
     </section>
-
     <section class="panel">
       <div class="section-heading"><div><span class="step">03 / CHECKLIST</span><h2>Booking से पहले</h2></div><span class="section-icon">✓</span></div>
       <div class="checklist" id="checklist">
@@ -71,9 +67,7 @@
       <div class="progress-track"><span id="progressBar"></span></div>
       <p class="progress-caption" id="progressCaption">0% तैयारी पूरी</p>
     </section>
-
     <section class="panel backup-panel"><div class="section-heading"><div><span class="step">04 / YOUR DATA</span><h2>Backup और Restore</h2></div><span class="section-icon">🛡️</span></div><p class="muted">अपनी यात्रा, passenger list और checklist का backup JSON फाइल में रखें। Backup फाइल निजी रखें।</p><div class="form-actions"><button class="secondary-btn" id="exportData" type="button">↓ Backup डाउनलोड</button><label class="import-label" for="importData">↑ Backup Restore</label><input id="importData" type="file" accept="application/json,.json" hidden></div><p class="form-message" id="backupMessage" role="status" aria-live="polite"></p></section>
-
     <section class="bottom-cta">
       <div><span class="step">READY WHEN YOU ARE</span><h2>तैयारी पूरी? अब official booking करें।</h2><p>बुकिंग और भुगतान IRCTC पर स्वयं पूरा करें।</p></div>
       <a class="primary-btn" href="https://www.irctc.co.in/nget/train-search" target="_blank" rel="noopener noreferrer">IRCTC खोलें ↗</a>
@@ -81,6 +75,7 @@
     <p class="disclaimer">यह एक स्वतंत्र trip-preparation tool है, IRCTC का आधिकारिक उत्पाद नहीं। यह टिकट बुक नहीं करता, availability की गारंटी नहीं देता और CAPTCHA, OTP या IRCTC सुरक्षा नियंत्रणों को bypass नहीं करता।</p>
   </main>
   <footer>Made for easier preparation <span>•</span> Your data stays on this device</footer>
+  <script src="./stations.js" defer></script>
   <script src="./app.js" defer></script>
 </body>
 </html>
